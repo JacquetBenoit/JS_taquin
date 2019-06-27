@@ -20,8 +20,8 @@ let winning_state = [];
 
 // position de la case vide
 const empty_cell = {i: 0, j: 0};
-// Initialisation de l'état courant
 
+// Initialisation de l'état courant
 
 
 function setInitState() {
@@ -39,11 +39,11 @@ function setInitState() {
 
         }
     }
-    if (turn === 0){
-        for(let i = 0; i < current_state.length; i++){
+    if (turn === 0) {
+        for (let i = 0; i < current_state.length; i++) {
             winning_state[i] = current_state[i].slice(0); // On copie le tableau pour la methode checkWin
         }
-        turn ++;
+        turn++;
     }
 
     console.log(" WIN " + winning_state)
@@ -159,11 +159,9 @@ function checkKey(e) {
     e = e || window.event;
 
     if (e.keyCode === 38) {
-        console.log("Haut")
         // up arrow
         applyMove(current_state, empty_cell, HAUT);
     } else if (e.keyCode === 40) {
-        console.log("Bas")
         // down arrow
         applyMove(current_state, empty_cell, BAS);
     } else if (e.keyCode === 37) {
@@ -179,21 +177,36 @@ function checkKey(e) {
     }
 }
 
-function doRandomShuffle(current_state, empty_cell) {
-    current_state.sort(() => Math.random() - 0.5);
-    for (let i = 0; i < current_state.length; i++) { // On mélange le tableau
-        current_state[i].sort(() => Math.random() - 0.5);
+function checkKeyShuffle(e) {
+    console.log(e)
+    if (e == 38) {
+        // up arrow
+        applyMove(current_state, empty_cell, HAUT);
+    } else if (e == 40) {
+        // down arrow
+        applyMove(current_state, empty_cell, BAS);
+    } else if (e == 37) {
+        // left arrow
+        applyMove(current_state, empty_cell, GAUCHE);
+    } else if (e == 39) {
+        // right arrow
+        applyMove(current_state, empty_cell, DROITE);
     }
-    for (let i = 0; i < current_state.length; i++) {
-        for (let j = 0; j < current_state[i].length; j++) {
-            if (current_state[i][j] === 0){  // On cherche où notre case vide se place
-                empty_cell.i = i;
-                empty_cell.j = j;
-            }           // Puis on lui attribut les valeur
-        }
+    displayState(current_state);
+}
+
+function doRandomShuffle() {
+    for (let i = 0; i < getRandomInt(40, 150); i++) {
+        checkKeyShuffle(getRandomInt(37, 41))
     }
-    console.log("Tableau mélangé")
-    console.log(" WIN " + winning_state)
+}
+
+// On renvoie un nombre aléatoire entre une valeur min (incluse)
+// et une valeur max (exclue)
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
 
