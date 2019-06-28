@@ -11,6 +11,8 @@ let side = 4;
 let turn = 0;
 let soluce = [];
 let oldMouv;
+let rightMove;
+let leftMove;
 // changement de style css en fonction de "side"
 document.documentElement.style.setProperty("--side", side);
 
@@ -63,7 +65,16 @@ function displayState(tab) {
                 const item = $(`<div data-i="${i}" data-j="${j}" class="item" id="${elem}">${elem}</div>`);
                 $(".grid").append(item);
             } else {
-                $(".grid").append(`<div class="vide""></div>`);
+                if (leftMove == 1){
+                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/car.png" alt="car" id="car"></div>`);
+                    leftMove = 0
+                } else if (rightMove == 1) {
+                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/carRight.png" alt="car" id="car"></div>`);
+                    rightMove = 0
+                } else {
+                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/car.png" alt="car" id="car"></div>`);
+
+                }
             }
 
         }
@@ -138,6 +149,9 @@ var span = document.getElementsByClassName("close")[0];
 // Pour afficher la fenetre quand on a gagné, appeler cette fonction
 function displayWin() {
     modal.style.display = "block";
+    setTimeout(function () {
+        modal.style.display = "none"
+    }, 5000)
 }
 
 // Quand on clique sur <span> (x), on ferme
@@ -207,9 +221,11 @@ function checkKey(e) {
         applyMove(current_state, empty_cell, BAS);
     } else if (e.keyCode === 37) {
         // left arrow
+        leftMove = 1;
         applyMove(current_state, empty_cell, GAUCHE);
     } else if (e.keyCode === 39) {
         // right arrow
+        rightMove = 1;
         applyMove(current_state, empty_cell, DROITE);
     }
     displayState(current_state);
@@ -230,9 +246,11 @@ if (empty_cell)
         applyMove(current_state, empty_cell, BAS);
     } else if (e == 37) {
         // left arrow
+        leftMove = 1
         applyMove(current_state, empty_cell, GAUCHE);
     } else if (e == 39) {
         // right arrow
+        rightMove = 1
         applyMove(current_state, empty_cell, DROITE);
     }
     displayState(current_state);
@@ -260,6 +278,7 @@ function movePos(futurPos, ec) {
         current_state[ec.i][ec.j] = oldValue // l'ancienne position prend la valeur de la futur visuellement
         ec.i = futurPos.i;
         ec.j = futurPos.j; // On redefinie la case vide avec sa nouvelle position
+
     } else {
         soluce.pop()
     }
@@ -269,7 +288,7 @@ function movePos(futurPos, ec) {
 
 
 function doSoluce(e) {
-    sleep(200)
+    sleep(400)
     console.log(soluce.length)
     if (e == 38) {
         // up arrow
@@ -279,9 +298,11 @@ function doSoluce(e) {
         applyMove(current_state, empty_cell, HAUT);
     } else if (e == 37) {
         // left arrow
+        rightMove = 1;
         applyMove(current_state, empty_cell, DROITE);
     } else if (e == 39) {
         // right arrow
+        leftMove = 1
         applyMove(current_state, empty_cell, GAUCHE);
     }
     displayState(current_state);
