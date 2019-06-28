@@ -9,7 +9,8 @@ let side = 4;
 
 // On utilise turn pour créer notre condition de victoire
 let turn = 0;
-
+let soluce = [];
+let oldMouv;
 // changement de style css en fonction de "side"
 document.documentElement.style.setProperty("--side", side);
 
@@ -151,11 +152,51 @@ window.onclick = function (event) {
     }
 }
 
+function findSolution(){
+    // TODO : Optimisatoin des mouvements
+    // let uselessMove = [];
+    // console.log(soluce)
+    // for (let i = 0  ; i < soluce.length  ; i++){
+    //     if (soluce[i] == 37 && soluce[i +1] == 38 ){
+    //         soluce[i] = 0
+    //         soluce[i+1] = 0
+    //     } else if (soluce[i] == 38 && soluce[i +1] == 37 ){
+    //         soluce[i] = 0
+    //         soluce[i+1] = 0
+    //     } else if (soluce[i] == 39 && soluce[i +1] == 40 ){
+    //         soluce[i] = 0
+    //         soluce[i+1] = 0
+    //     } else if (soluce[i] == 40 && soluce[i +1] == 39 ){
+    //         soluce[i] = 0
+    //         soluce[i+1] = 0
+    //     } else {
+    //         console.log("next")
+    //     }
+    // }
+    // for (let i = 0; i < uselessMove.length; i++){
+    //     soluce.splice(uselessMove[i], 2)
+    // }
 
+
+    soluce.reverse();
+    console.log("nouvelle taille : " + soluce)
+    for (let i = 0; i < soluce.length; i++){
+        setTimeout(function() {
+            doSoluce(soluce[i])
+        }, (1500))
+    }
+}
+function sleep( millisecondsToWait )
+{
+    let now = new Date().getTime();
+    while ( new Date().getTime() < now + millisecondsToWait ) {
+    }
+}
 // Pour récupérer l'appui sur les flèches du clavier
 document.onkeydown = checkKey;
 
 function checkKey(e) {
+    soluce.push(e.keyCode)
     e = e || window.event;
 
     if (e.keyCode === 38) {
@@ -177,8 +218,10 @@ function checkKey(e) {
     }
 }
 
+
 function checkKeyShuffle(e) {
-    console.log(e)
+if (empty_cell)
+    soluce.push(e)
     if (e == 38) {
         // up arrow
         applyMove(current_state, empty_cell, HAUT);
@@ -195,11 +238,57 @@ function checkKeyShuffle(e) {
     displayState(current_state);
 }
 
+
 function doRandomShuffle() {
-    for (let i = 0; i < getRandomInt(40, 150); i++) {
-        checkKeyShuffle(getRandomInt(37, 41))
+    let x = 25 * side;
+    let y = 40 * side;
+    soluce = []
+        for (let i = 0; i < getRandomInt(x, y); i++) {
+            let x = getRandomInt(37, 41)
+            checkKeyShuffle(x)
+            oldMouv = x;
+        }
+    console.log(soluce)
+}
+
+
+function movePos(futurPos, ec) {
+    if (futurPos.i < current_state.length && futurPos.j < current_state.length
+        && futurPos.i >= 0 && futurPos.j >= 0) { // On verifie si toute les conditions sont vraies
+        let oldValue = current_state[futurPos.i][futurPos.j] // On garde notre place precisement dans le tableau
+        current_state[futurPos.i][futurPos.j] = 0 // Puis on la modifie et on la passe à zero pour quelle devienne vide visuellement
+        current_state[ec.i][ec.j] = oldValue // l'ancienne position prend la valeur de la futur visuellement
+        ec.i = futurPos.i;
+        ec.j = futurPos.j; // On redefinie la case vide avec sa nouvelle position
+    } else {
+        soluce.pop()
     }
 }
+
+
+
+
+function doSoluce(e) {
+    sleep(200)
+    console.log(soluce.length)
+    if (e == 38) {
+        // up arrow
+        applyMove(current_state, empty_cell, BAS);
+    } else if (e == 40) {
+        // down arrow
+        applyMove(current_state, empty_cell, HAUT);
+    } else if (e == 37) {
+        // left arrow
+        applyMove(current_state, empty_cell, DROITE);
+    } else if (e == 39) {
+        // right arrow
+        applyMove(current_state, empty_cell, GAUCHE);
+    }
+    displayState(current_state);
+}
+
+
+
 
 // On renvoie un nombre aléatoire entre une valeur min (incluse)
 // et une valeur max (exclue)
@@ -229,6 +318,7 @@ function applyMove(state, ec, move) {
             futurPos.j--;
             movePos(futurPos, ec)
             break
+
     }
 }
 
@@ -244,16 +334,6 @@ function checkWin() {
     return true;
 }
 
-function movePos(futurPos, ec) {
-    if (futurPos.i < current_state.length && futurPos.j < current_state.length
-        && futurPos.i >= 0 && futurPos.j >= 0) { // On verifie si toute les conditions sont vraies
-        let oldValue = current_state[futurPos.i][futurPos.j] // On garde notre place precisement dans le tableau
-        current_state[futurPos.i][futurPos.j] = 0 // Puis on la modifie et on la passe à zero pour quelle devienne vide visuellement
-        current_state[ec.i][ec.j] = oldValue // l'ancienne position prend la valeur de la futur visuellement
-        ec.i = futurPos.i;
-        ec.j = futurPos.j; // On redefinie la case vide avec sa nouvelle position
-    }
-}
 
 
 function reset() {
@@ -263,3 +343,15 @@ function reset() {
 
 // Affichage initial : on fait un reset
 reset();
+let test = [
+    37,
+    38,
+    37,
+    39,
+    40,
+    37,
+    38,
+    40,
+    37,
+]
+
