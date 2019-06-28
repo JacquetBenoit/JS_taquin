@@ -13,6 +13,8 @@ let soluce = [];
 let oldMouv;
 let rightMove;
 let leftMove;
+let topMove;
+let botMove;
 // changement de style css en fonction de "side"
 document.documentElement.style.setProperty("--side", side);
 
@@ -65,7 +67,7 @@ function displayState(tab) {
                 const item = $(`<div data-i="${i}" data-j="${j}" class="item" id="${elem}">${elem}</div>`);
                 $(".grid").append(item);
             } else {
-                if (leftMove == 1){
+                if (leftMove == 1) {
                     $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/car.png" alt="car" id="car"></div>`);
                     leftMove = 0
                 } else if (rightMove == 1) {
@@ -79,8 +81,6 @@ function displayState(tab) {
 
         }
     }
-
-
 }
 
 // Au clique sur "Check" on verifie si les positions sont bonnes
@@ -166,7 +166,7 @@ window.onclick = function (event) {
     }
 }
 
-function findSolution(){
+function findSolution() {
     // TODO : Optimisatoin des mouvements
     // let uselessMove = [];
     // console.log(soluce)
@@ -194,18 +194,19 @@ function findSolution(){
 
     soluce.reverse();
     console.log("nouvelle taille : " + soluce)
-    for (let i = 0; i < soluce.length; i++){
-        setTimeout(function() {
+    for (let i = 0; i < soluce.length; i++) {
+        setTimeout(function () {
             doSoluce(soluce[i])
         }, (1500))
     }
 }
-function sleep( millisecondsToWait )
-{
+
+function sleep(millisecondsToWait) {
     let now = new Date().getTime();
-    while ( new Date().getTime() < now + millisecondsToWait ) {
+    while (new Date().getTime() < now + millisecondsToWait) {
     }
 }
+
 // Pour récupérer l'appui sur les flèches du clavier
 document.onkeydown = checkKey;
 
@@ -215,9 +216,11 @@ function checkKey(e) {
 
     if (e.keyCode === 38) {
         // up arrow
+        topMove = 1
         applyMove(current_state, empty_cell, HAUT);
     } else if (e.keyCode === 40) {
         // down arrow
+        botMove = 1
         applyMove(current_state, empty_cell, BAS);
     } else if (e.keyCode === 37) {
         // left arrow
@@ -228,7 +231,9 @@ function checkKey(e) {
         rightMove = 1;
         applyMove(current_state, empty_cell, DROITE);
     }
-    displayState(current_state);
+    setTimeout(function () {
+        displayState(current_state);
+    }, 2000)
     if (checkWin()) {
         displayWin();
     }
@@ -236,13 +241,15 @@ function checkKey(e) {
 
 
 function checkKeyShuffle(e) {
-if (empty_cell)
-    soluce.push(e)
+    if (empty_cell)
+        soluce.push(e)
     if (e == 38) {
         // up arrow
+        topMove = 1
         applyMove(current_state, empty_cell, HAUT);
     } else if (e == 40) {
         // down arrow
+        botMove = 1
         applyMove(current_state, empty_cell, BAS);
     } else if (e == 37) {
         // left arrow
@@ -261,11 +268,11 @@ function doRandomShuffle() {
     let x = 25 * side;
     let y = 40 * side;
     soluce = []
-        for (let i = 0; i < getRandomInt(x, y); i++) {
-            let x = getRandomInt(37, 41)
-            checkKeyShuffle(x)
-            oldMouv = x;
-        }
+    for (let i = 0; i < getRandomInt(x, y); i++) {
+        let x = getRandomInt(37, 41)
+        checkKeyShuffle(x)
+        oldMouv = x;
+    }
     console.log(soluce)
 }
 
@@ -278,6 +285,24 @@ function movePos(futurPos, ec) {
         current_state[ec.i][ec.j] = oldValue // l'ancienne position prend la valeur de la futur visuellement
         ec.i = futurPos.i;
         ec.j = futurPos.j; // On redefinie la case vide avec sa nouvelle position
+        if (topMove == 1){
+            document.getElementById("caseVide").className = "vide animateTop"
+            document.getElementById(oldValue).className = "item animateBot"
+            topMove = 0
+        } else if (botMove == 1){
+            document.getElementById("caseVide").className = "vide animateBot"
+            document.getElementById(oldValue).className = "item animateTop"
+            botMove = 0
+
+        } else if (rightMove == 1){
+            document.getElementById(oldValue).className = "item animateRight"
+            document.getElementById("caseVide").className = "vide animateLeft"
+            document.getElementById("caseVide").setAttribute('src', 'images/carRight.png')
+        } else if (leftMove == 1) {
+            document.getElementById(oldValue).className = "item animateLeft"
+            document.getElementById("caseVide").className = "vide animateRight"
+
+        }
 
     } else {
         soluce.pop()
@@ -285,16 +310,16 @@ function movePos(futurPos, ec) {
 }
 
 
-
-
 function doSoluce(e) {
     sleep(400)
     console.log(soluce.length)
     if (e == 38) {
         // up arrow
+        botMove = 1
         applyMove(current_state, empty_cell, BAS);
     } else if (e == 40) {
         // down arrow
+        topMove = 1
         applyMove(current_state, empty_cell, HAUT);
     } else if (e == 37) {
         // left arrow
@@ -307,8 +332,6 @@ function doSoluce(e) {
     }
     displayState(current_state);
 }
-
-
 
 
 // On renvoie un nombre aléatoire entre une valeur min (incluse)
@@ -356,8 +379,8 @@ function checkWin() {
 }
 
 
-
 function reset() {
+
     setInitState();
     displayState(current_state);
 }

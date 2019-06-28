@@ -192,3 +192,72 @@ image-resolution: normal;
   text-decoration: none;
   cursor: pointer;
 }
+
+
+
+
+.animateLeft{
+  animation-duration: 2s;
+  animation-direction: reverse;
+  animation-name: animateleft;
+}
+@keyframes animateleft {
+  from {
+    margin-left: 100%;
+    width: 100px;
+  }
+  to {
+    margin-left: 0%;
+    width: 100px;
+  }
+}
+
+.animateRight{
+  animation-duration: 2s;
+  animation-direction: reverse;
+  animation-name: animateright;
+}
+@keyframes animateright {
+  from {
+    margin-left: -100%;
+    width: 100px;
+  }
+  to {
+    margin-left: 0%;
+    width: 100px;
+  }
+}
+
+.animateTop{
+  animation-duration: 2s;
+  animation-direction: reverse;
+  animation-name: animateTop;
+}
+@keyframes animateTop {
+   from {
+     margin-top: -100%;
+     width: 100px;
+   }
+   to {
+     margin-top: 0%;
+     width: 100px;
+   }
+ }
+
+.animateBot{
+  animation-duration: 2s;
+  animation-direction: reverse;
+  animation-name: animateBot;
+}
+@keyframes animateBot {
+  from {
+    margin-top: 200%;
+  }
+  to {
+    margin-bottom: -200%;
+  }
+}
+
+
+
+
