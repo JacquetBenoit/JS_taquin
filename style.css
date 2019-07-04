@@ -119,6 +119,7 @@ button{
   z-index: 0;
 }
 .item {
+  z-index: auto;
   font-family: Retro;
   text-align: center;
   /*font-size: 10px;*/
@@ -136,6 +137,7 @@ button{
 }
 /* la case vide */
 .vide {
+  z-index: 8;
   width: 100px;
   height: 100px;
   /*border: 2px inset #E651C3;*/
@@ -150,7 +152,7 @@ button{
 }
 img {
   width: 100%;
-  height: 80%;
+  height: 100%;
 image-resolution: normal;
 }
 
@@ -158,7 +160,7 @@ image-resolution: normal;
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 9; /* Sit on top */
   /*padding-top: 50px; !* Location of the box *!*/
   left: 0;
   top: 0;
@@ -171,6 +173,7 @@ image-resolution: normal;
 
 /* Modal Content */
 .modal-content {
+  z-index: 9;
   background-color: #010eff;
   margin: auto;
   padding: 20px;
@@ -192,9 +195,6 @@ image-resolution: normal;
   text-decoration: none;
   cursor: pointer;
 }
-
-
-
 
 .animateLeft{
   animation-duration: 2s;
@@ -254,7 +254,7 @@ image-resolution: normal;
     margin-top: 200%;
   }
   to {
-    margin-bottom: -200%;
+    margin-bottom: -100%;
   }
 }
 

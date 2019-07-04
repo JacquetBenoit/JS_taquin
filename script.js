@@ -68,13 +68,13 @@ function displayState(tab) {
                 $(".grid").append(item);
             } else {
                 if (leftMove == 1) {
-                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/car.png" alt="car" id="car"></div>`);
+                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
                     leftMove = 0
                 } else if (rightMove == 1) {
-                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/carRight.png" alt="car" id="car"></div>`);
+                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
                     rightMove = 0
                 } else {
-                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/car.png" alt="car" id="car"></div>`);
+                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
 
                 }
             }
@@ -231,18 +231,17 @@ function checkKey(e) {
         rightMove = 1;
         applyMove(current_state, empty_cell, DROITE);
     }
-    setTimeout(function () {
+    // setTimeout(function () {
         displayState(current_state);
-    }, 2000)
+    console.log(soluce)
     if (checkWin()) {
         displayWin();
-    }
-}
+    // }}, 2000)
+}}
 
 
 function checkKeyShuffle(e) {
-    if (empty_cell)
-        soluce.push(e)
+    soluce.push(e) // on garde chaque mouvement en mémoire
     if (e == 38) {
         // up arrow
         topMove = 1
@@ -285,27 +284,26 @@ function movePos(futurPos, ec) {
         current_state[ec.i][ec.j] = oldValue // l'ancienne position prend la valeur de la futur visuellement
         ec.i = futurPos.i;
         ec.j = futurPos.j; // On redefinie la case vide avec sa nouvelle position
-        if (topMove == 1){
-            document.getElementById("caseVide").className = "vide animateTop"
-            document.getElementById(oldValue).className = "item animateBot"
-            topMove = 0
-        } else if (botMove == 1){
-            document.getElementById("caseVide").className = "vide animateBot"
-            document.getElementById(oldValue).className = "item animateTop"
-            botMove = 0
-
-        } else if (rightMove == 1){
-            document.getElementById(oldValue).className = "item animateRight"
-            document.getElementById("caseVide").className = "vide animateLeft"
-            document.getElementById("caseVide").setAttribute('src', 'images/carRight.png')
-        } else if (leftMove == 1) {
-            document.getElementById(oldValue).className = "item animateLeft"
-            document.getElementById("caseVide").className = "vide animateRight"
-
-        }
+        // if (topMove == 1){
+        //     // document.getElementById(oldValue).className = "item animateBot"
+        //     document.getElementById("caseVide").className = "vide animateTop"
+        //     topMove = 0
+        // } else if (botMove == 1){
+        //     // document.getElementById(oldValue).className = "item animateTop"
+        //     document.getElementById("caseVide").className = "vide animateBot"
+        //     botMove = 0
+        // } else if (rightMove == 1){
+        //     document.getElementById("caseVide").setAttribute('src', 'images/carRight.png')
+        //     // document.getElementById(oldValue).className = "item animateRight"
+        //     document.getElementById("caseVide").className = "vide animateLeft"
+        // } else if (leftMove == 1) {
+        //     // document.getElementById(oldValue).className = "item animateLeft"
+        //     document.getElementById("caseVide").className = "vide animateRight"
+        //
+        // }
 
     } else {
-        soluce.pop()
+        soluce.pop() // si le mouvement est impossible on le supprime du tableau
     }
 }
 
@@ -362,7 +360,6 @@ function applyMove(state, ec, move) {
             futurPos.j--;
             movePos(futurPos, ec)
             break
-
     }
 }
 
@@ -381,21 +378,20 @@ function checkWin() {
 
 function reset() {
 
+
     setInitState();
     displayState(current_state);
 }
 
+// function BFS(){
+//     let moveToNextState = {
+//         state,
+//         mouvement
+//     }
+//
+// }
+
 // Affichage initial : on fait un reset
 reset();
-let test = [
-    37,
-    38,
-    37,
-    39,
-    40,
-    37,
-    38,
-    40,
-    37,
-]
+
 
