@@ -1,263 +1,358 @@
 :root {
-  --side: 4;
+    --side: 4;
 }
 
 * {
-  margin: 0;
+    margin: 0;
 }
 
 ::selection {
-  background: transparent;
+    background: transparent;
 }
-@font-face {
-  font-family: 'Retro';
-  src: url("typos/Retronoid.otf");
-}
-body {
-  /*background: #1e1f29;*/
-  display: flex;
-  background-image: url("https://i.pinimg.com/originals/c9/9a/4a/c99a4a05ba745e36874c55edfcb758dc.png");
-  /* Full height */
-  height: 100%;
 
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 100vh;
-  overflow: hidden;
-  font-family: sans-serif;
+@font-face {
+    font-family: 'Retro';
+    src: url("typos/Retronoid.otf");
+}
+
+body {
+    /*background: #1e1f29;*/
+    display: flex;
+    background-image: url("https://i.pinimg.com/originals/c9/9a/4a/c99a4a05ba745e36874c55edfcb758dc.png");
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: sans-serif;
 }
 
 #win {
-  font-family: Retro;
-  text-align: center;
-  font-size: 90px;
-  color: yellow;
+    font-family: Retro;
+    text-align: center;
+    font-size: 90px;
+    color: yellow;
 }
+
+#tutu {
+    font-family: Retro;
+    text-align: center;
+    font-size: 90px;
+    color: yellow;
+}
+
 .grid {
-  display: grid;
-  /* pour ajuster automatiquement en fonction du nombre de cases par côté */
-  grid-template-columns: repeat(var(--side), auto);
-  margin: auto;
+    display: grid;
+    /* pour ajuster automatiquement en fonction du nombre de cases par côté */
+    grid-template-columns: repeat(var(--side), auto);
+    margin: auto;
 }
-button{
-  background: #E651C3;
-  border-radius: 24px;
-  border: 2px inset aqua;
+
+button {
+    background: #E651C3;
+    border-radius: 24px;
+    border: 2px inset aqua;
 }
-.plus{
-  font-family: Retro;
-  text-shadow: 1px 1px 2px #010eff;
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: yellow;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-  z-index: 0;
+
+.plus {
+    font-family: Retro;
+    text-shadow: 1px 1px 2px #010eff;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 0;
 }
+
 .minus {
-  text-shadow: 1px 1px 2px #010eff;
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: yellow;
-  font-family: Retro;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-  z-index: 0;
+    text-shadow: 1px 1px 2px #010eff;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    font-family: Retro;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 0;
 }
+
 .shuffle {
-  text-shadow: 1px 1px 2px #010eff;
-  font-family: Retro;
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: yellow;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-  z-index: 0;
+    text-shadow: 1px 1px 2px #010eff;
+    font-family: Retro;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 0;
 }
+
 .check {
-  text-shadow: 1px 1px 2px #010eff;
-  font-family: Retro;
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: yellow;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-  z-index: 0;
+    text-shadow: 1px 1px 2px #010eff;
+    font-family: Retro;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 0;
 }
+
 .reset {
-  text-shadow: 1px 1px 2px #010eff;
-  font-family: Retro;
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: yellow;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-  z-index: 0;
+    text-shadow: 1px 1px 2px #010eff;
+    font-family: Retro;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 0;
 }
+
 .solution {
-  text-shadow: 1px 1px 2px #010eff;
-  font-family: Retro;
-  font-size: 18px;
-  text-align: center;
-  font-weight: bold;
-  color: yellow;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-  z-index: 0;
+    text-shadow: 1px 1px 2px #010eff;
+    font-family: Retro;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 0;
 }
+
 .item {
-  z-index: auto;
-  font-family: Retro;
-  text-align: center;
-  /*font-size: 10px;*/
-  width: 100px;
-  height: 100px;
-  border-radius: 35%;
-  background: hsl(314, 75%, 61%);
-  text-align: center;
-  line-height: 100px;
-  font-size: 28px;
-  color: #010eff;
-  cursor: pointer;
-  border: 2px inset aqua;
-  text-shadow: 1px 1px 2px #fff800;
+    z-index: auto;
+    font-family: Retro;
+    text-align: center;
+    /*font-size: 10px;*/
+    width: 100px;
+    height: 100px;
+    border-radius: 35%;
+    background: hsl(314, 75%, 61%);
+    text-align: center;
+    line-height: 100px;
+    font-size: 28px;
+    color: #010eff;
+    cursor: pointer;
+    border: 2px inset aqua;
+    text-shadow: 1px 1px 2px #fff800;
 }
+
 /* la case vide */
 .vide {
-  z-index: 8;
-  width: 100px;
-  height: 100px;
-  /*border: 2px inset #E651C3;*/
-  border-radius: 35%;
-  /*background: #fff2;*/
-  /*background-image: url("images/car.png");*/
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  text-align: center;
+    z-index: 8;
+    width: 100px;
+    height: 100px;
+    /*border: 2px inset #E651C3;*/
+    border-radius: 35%;
+    /*background: #fff2;*/
+    /*background-image: url("images/car.png");*/
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: center;
 }
-img {
-  width: 100%;
-  height: 100%;
-image-resolution: normal;
+
+img#DAVIDOU {
+    width: 100%;
+    height: 100%;
+    image-resolution: normal;
 }
+
+img#winScreen {
+    width: 100%;
+    height: 100%;
+    image-resolution: normal;
+}
+
 
 /* The Modal (la fenetre "gagné") */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 9; /* Sit on top */
-  /*padding-top: 50px; !* Location of the box *!*/
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9; /* Sit on top */
+    /*padding-top: 50px; !* Location of the box *!*/
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 80%; /* Full height */
+    /*overflow: auto; !* Enable scroll if needed *!*/
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-  z-index: 9;
-  background-color: #010eff;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+    z-index: 9;
+    background-color: #010eff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.modal-tuto {
+    z-index: 9;
+    background-color: #010eff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+div.modal-tuto img {
+    height: 70%;
+    width: 100%;
 }
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.animateLeft{
-  animation-duration: 2s;
-  animation-direction: reverse;
-  animation-name: animateleft;
+.animateLeft {
+    animation-duration: 2s;
+    animation-direction: reverse;
+    animation-name: animateleft;
 }
+
 @keyframes animateleft {
-  from {
-    margin-left: 100%;
-    width: 100px;
-  }
-  to {
-    margin-left: 0%;
-    width: 100px;
-  }
+    from {
+        margin-left: 100%;
+        width: 100px;
+    }
+    to {
+        margin-left: 0%;
+        width: 100px;
+    }
 }
 
-.animateRight{
-  animation-duration: 2s;
-  animation-direction: reverse;
-  animation-name: animateright;
+.animateRight {
+    animation-duration: 2s;
+    animation-direction: reverse;
+    animation-name: animateright;
 }
+
 @keyframes animateright {
-  from {
-    margin-left: -100%;
-    width: 100px;
-  }
-  to {
-    margin-left: 0%;
-    width: 100px;
-  }
+    from {
+        margin-left: -100%;
+        width: 100px;
+    }
+    to {
+        margin-left: 0%;
+        width: 100px;
+    }
 }
 
-.animateTop{
-  animation-duration: 2s;
-  animation-direction: reverse;
-  animation-name: animateTop;
+.animateTop {
+    animation-duration: 2s;
+    animation-direction: reverse;
+    animation-name: animateTop;
 }
+
 @keyframes animateTop {
-   from {
-     margin-top: -100%;
-     width: 100px;
-   }
-   to {
-     margin-top: 0%;
-     width: 100px;
-   }
- }
-
-.animateBot{
-  animation-duration: 2s;
-  animation-direction: reverse;
-  animation-name: animateBot;
+    from {
+        margin-top: -100%;
+        width: 100px;
+    }
+    to {
+        margin-top: 0%;
+        width: 100px;
+    }
 }
+
+.animateBot {
+    animation-duration: 2s;
+    animation-direction: reverse;
+    animation-name: animateBot;
+}
+
 @keyframes animateBot {
-  from {
-    margin-top: 200%;
-  }
-  to {
-    margin-bottom: -100%;
-  }
+    from {
+        margin-top: 200%;
+    }
+    to {
+        margin-bottom: -100%;
+    }
 }
 
+.load {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
 
+.load img {
+    z-index: 15;
+    position: relative;
+    width: 100%;
+    top: -103px;
+}
 
+.load p {
+    text-shadow: 1px 1px 2px #010eff;
+    font-family: Retro;
+    font-size: 58px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 16;
+    position: relative;
+    top: 22%;
+    left: 82%;
+}
+.shuffleDavid{
+    position: absolute;
+    top: 26%;
+    left: 32%;
+    z-index: 15;
+}
+.shuffleDavid img{
+    width: 250%;
+}
+.shuffleDavid p {
+    text-shadow: 1px 1px 2px #010eff;
+    font-family: Retro;
+    font-size: 32px;
+    text-align: center;
+    font-weight: bold;
+    color: yellow;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 16;
+    position: absolute;
+    top: 6%;
+    left: 24%;
+}
 

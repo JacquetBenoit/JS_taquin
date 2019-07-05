@@ -67,16 +67,16 @@ function displayState(tab) {
                 const item = $(`<div data-i="${i}" data-j="${j}" class="item" id="${elem}">${elem}</div>`);
                 $(".grid").append(item);
             } else {
-                if (leftMove == 1) {
-                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
-                    leftMove = 0
-                } else if (rightMove == 1) {
-                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
-                    rightMove = 0
-                } else {
-                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
+                // if (leftMove == 1) {
+                //     $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
+                //     leftMove = 0
+                // } else if (rightMove == 1) {
+                //     $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="car" id="car"></div>`);
+                //     rightMove = 0
+                // } else {
+                    $(".grid").append(`<div class="vide" id = "caseVide""><img src="images/davidou.png" alt="DAVIDOU" id="DAVID"></div>`);
 
-                }
+                // }
             }
 
         }
@@ -95,14 +95,19 @@ $(".check").click(function () {
 $(".reset").click(reset);
 
 $(".shuffle").click(function () {
-    // pas le temps de faire le shuffle
-    doRandomShuffle(current_state, empty_cell);
-    displayState(current_state);
+    shuffle.style.display = "block"
+    setTimeout(function () {
+        shuffle.style.display = "none"
+        doRandomShuffle(current_state, empty_cell);
+        displayState(current_state);
+    }, 2000)
+
 });
 
 $(".solution").click(function () {
     console.log("Solution demandée par l'utilisateur·ice")
-    findSolution(current_state, empty_cell);
+    findSolution(current_state, empty_cell)
+
 });
 
 
@@ -142,10 +147,20 @@ $(".grid").on('click', '.item', function () {
 
 // Une jolie fenetre est prévue pour quand on gagne
 var modal = document.getElementById("myModal");
-
+var tuto = document.getElementById('tuto')
+var load = document.getElementById('loadScreen')
+var shuffle = document.getElementById('shuffle')
+load.style.display = "none"
+shuffle.style.display = "none"
 // Pour fermer la fenetre avec un "X"
 var span = document.getElementsByClassName("close")[0];
 
+function howTo() {
+    tuto.style.display = "block";
+    setTimeout(function () {
+        tuto.style.display = "none"
+    }, 3000)
+}
 // Pour afficher la fenetre quand on a gagné, appeler cette fonction
 function displayWin() {
     modal.style.display = "block";
@@ -157,12 +172,15 @@ function displayWin() {
 // Quand on clique sur <span> (x), on ferme
 span.onclick = function () {
     modal.style.display = "none";
+    tuto.style.display = "none";
 }
 
 // On ferme aussi si on clique n'importe où
 window.onclick = function (event) {
     if (event.target === modal) {
         modal.style.display = "none";
+    } else if (event.target === tuto){
+        tuto.style.display = "none";
     }
 }
 
@@ -191,14 +209,18 @@ function findSolution() {
     //     soluce.splice(uselessMove[i], 2)
     // }
 
+    load.style.display = "block"
+    setTimeout(function () {
+        load.style.display = "none"
+        soluce.reverse();
+        for (let i = 0; i < soluce.length; i++) {
+            setTimeout(function () {
+                doSoluce(soluce[i])
+            }, (500))
+        }
+    }, 4000)
 
-    soluce.reverse();
-    console.log("nouvelle taille : " + soluce)
-    for (let i = 0; i < soluce.length; i++) {
-        setTimeout(function () {
-            doSoluce(soluce[i])
-        }, (1500))
-    }
+
 }
 
 function sleep(millisecondsToWait) {
@@ -234,7 +256,7 @@ function checkKey(e) {
     // setTimeout(function () {
         displayState(current_state);
     console.log(soluce)
-    if (checkWin()) {
+    if (checkWin() && turn !== 0) {
         displayWin();
     // }}, 2000)
 }}
@@ -310,7 +332,6 @@ function movePos(futurPos, ec) {
 
 function doSoluce(e) {
     sleep(400)
-    console.log(soluce.length)
     if (e == 38) {
         // up arrow
         botMove = 1
@@ -329,6 +350,7 @@ function doSoluce(e) {
         applyMove(current_state, empty_cell, GAUCHE);
     }
     displayState(current_state);
+
 }
 
 
@@ -377,8 +399,6 @@ function checkWin() {
 
 
 function reset() {
-
-
     setInitState();
     displayState(current_state);
 }
@@ -392,6 +412,11 @@ function reset() {
 // }
 
 // Affichage initial : on fait un reset
-reset();
+if (turn ===0){
+    reset();
+    howTo()
+}
+
+
 
 
