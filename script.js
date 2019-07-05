@@ -5,7 +5,7 @@ const DROITE = "D";
 const GAUCHE = "G";
 
 // nombre de cases par côté
-let side = 4;
+let side = 3;
 
 // On utilise turn pour créer notre condition de victoire
 let turn = 0;
@@ -17,6 +17,8 @@ document.documentElement.style.setProperty("--side", side);
 // retient l'état courant du taquin
 let current_state = [];
 let winning_state = [];
+
+let solution = [];
 
 // position de la case vide
 const empty_cell = {i: 0, j: 0};
@@ -68,13 +70,13 @@ function displayState(tab) {
         }
     }
 
-
+    console.log("current state : " + current_state);
 }
 
 // Au clique sur "Check" on verifie si les positions sont bonnes
 $(".check").click(function () {
-    console.log("Is winning? ", checkWin());
-    if (checkWin()) {
+    console.log("Is winning? ", checkWin(current_state, winning_state));
+    if (checkWin(current_state, winning_state)) {
         displayWin();
     }
 });
@@ -90,7 +92,7 @@ $(".shuffle").click(function () {
 
 $(".solution").click(function () {
     console.log("Solution demandée par l'utilisateur·ice")
-    findSolution(current_state, empty_cell);
+    findSolution();
 });
 
 
@@ -156,6 +158,7 @@ window.onclick = function (event) {
 document.onkeydown = checkKey;
 
 function checkKey(e) {
+    solution.push(e.keyCode)
     e = e || window.event;
 
     if (e.keyCode === 38) {
@@ -172,13 +175,15 @@ function checkKey(e) {
         applyMove(current_state, empty_cell, DROITE);
     }
     displayState(current_state);
-    if (checkWin()) {
+    if (checkWin(current_state, winning_state)) {
         displayWin();
     }
+        // console.log(solution);
+    
 }
 
 function checkKeyShuffle(e) {
-    console.log(e)
+    solution.push(e);
     if (e == 38) {
         // up arrow
         applyMove(current_state, empty_cell, HAUT);
@@ -193,6 +198,26 @@ function checkKeyShuffle(e) {
         applyMove(current_state, empty_cell, DROITE);
     }
     displayState(current_state);
+    console.log("soluce = " + solution);
+}
+
+function distributeSolution(t) {
+    sleep(400);
+        if (t == 38) {
+            // up arrow
+            applyMoveSoluce(current_state, empty_cell, BAS);
+        } else if (t == 40) {
+            // down arrow
+            applyMoveSoluce(current_state, empty_cell, HAUT);
+        } else if (t == 37) {
+            // left arrow
+            applyMoveSoluce(current_state, empty_cell, DROITE);
+        } else if (t == 39) {
+            // right arrow
+            applyMoveSoluce(current_state, empty_cell, GAUCHE);
+        }
+        console.log('t = ' + t)
+        displayState(current_state)
 }
 
 function doRandomShuffle() {
@@ -200,6 +225,12 @@ function doRandomShuffle() {
         checkKeyShuffle(getRandomInt(37, 41))
     }
 }
+
+function sleep(millisecondsToWait) {
+    let now = new Date().getTime();
+    while (new Date().getTime() < now + millisecondsToWait) {
+    }
+ }
 
 // On renvoie un nombre aléatoire entre une valeur min (incluse)
 // et une valeur max (exclue)
@@ -211,6 +242,54 @@ function getRandomInt(min, max) {
 
 
 function applyMove(state, ec, move) {
+    let futurPos = {i: ec.i, j: ec.j} // On garde notre position pour les prochaines verifs et avant de modifier notre position actuelle
+    console.log('move = ' , move);
+    switch (move) {
+        case HAUT :
+            futurPos.i--;
+            movePos(futurPos, ec)
+            break
+        case BAS :
+            futurPos.i++;
+            movePos(futurPos, ec)
+            break
+        case DROITE :
+            futurPos.j++;
+            movePos(futurPos, ec)
+            break
+        case GAUCHE :
+            futurPos.j--;
+            movePos(futurPos, ec)
+            break
+    }
+}
+
+
+function checkWin(current_state, winning_state) {
+    for (let i = 0; i < current_state.length; i++) {
+        for (let j = 0; j < current_state[i].length; j++) {  // On verifie chaque case et on les compare
+            if (current_state[i][j] !== winning_state[i][j]) {
+                return false // Si au moins une case est fausse la victoire est fausse
+            }
+        }
+    }
+    return true;
+}
+
+function movePos(futurPos, ec) {
+    if (futurPos.i < current_state.length && futurPos.j < current_state.length
+        && futurPos.i >= 0 && futurPos.j >= 0) { // On verifie si toute les conditions sont vraies
+        let oldValue = current_state[futurPos.i][futurPos.j] // On garde notre place precisement dans le tableau
+        current_state[futurPos.i][futurPos.j] = 0 // Puis on la modifie et on la passe à zero pour quelle devienne vide visuellement
+        current_state[ec.i][ec.j] = oldValue // l'ancienne position prend la valeur de la futur visuellement
+        ec.i = futurPos.i;
+        ec.j = futurPos.j; // On redefinie la case vide avec sa nouvelle position
+    } else {
+        solution.pop();
+    }
+}
+
+function applyMoveSoluce(state, ec, move) {
     let futurPos = {i: ec.i, j: ec.j} // On garde notre position pour les prochaines verifs et avant de modifier notre position actuelle
     switch (move) {
         case HAUT :
@@ -233,32 +312,43 @@ function applyMove(state, ec, move) {
 }
 
 
-function checkWin() {
-    for (let i = 0; i < current_state.length; i++) {
-        for (let j = 0; j < current_state[i].length; j++) {  // On verifie chaque case et on les compare
-            if (current_state[i][j] !== winning_state[i][j]) {
-                return false // Si au moins une case est fausse la victoire est fausse
-            }
-        }
+function findSolution() {
+    solution.reverse();
+    for(let i = 0; i < solution.length; i++){
+        setTimeout(() => {
+            distributeSolution(solution[i]);
+        }, 500);
+        
     }
-    return true;
+    
 }
-
-function movePos(futurPos, ec) {
-    if (futurPos.i < current_state.length && futurPos.j < current_state.length
-        && futurPos.i >= 0 && futurPos.j >= 0) { // On verifie si toute les conditions sont vraies
-        let oldValue = current_state[futurPos.i][futurPos.j] // On garde notre place precisement dans le tableau
-        current_state[futurPos.i][futurPos.j] = 0 // Puis on la modifie et on la passe à zero pour quelle devienne vide visuellement
-        current_state[ec.i][ec.j] = oldValue // l'ancienne position prend la valeur de la futur visuellement
-        ec.i = futurPos.i;
-        ec.j = futurPos.j; // On redefinie la case vide avec sa nouvelle position
-    }
-}
-
 
 function reset() {
     setInitState();
     displayState(current_state);
+}
+
+function BFS(source){
+ 
+ let vertex = function(position, moove) {
+     this.position = position,
+     this.moove = moove
+ }   
+
+ let frontier = [];
+ frontier.push(source);
+ let known = [];
+    
+    while (frontier.length > 0){
+        let next = [];
+        frontier.forEach((x)=>{
+            if(checkWin(x, winning_state)){
+                return true
+            } else {
+                known.push(x);
+            }
+        })
+    }
 }
 
 // Affichage initial : on fait un reset
